@@ -14,7 +14,11 @@ struct ContentView: View {
         if let aReminder = reminderManager.reminders {
             NavigationStack {
                 List(aReminder, id: \.calendarItemIdentifier) { reminder in
-                    Text(reminder.title)
+                    HStack {
+                        Image(systemName: reminder.isCompleted ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(reminder.isCompleted ? Color.accentColor : Color.gray)
+                        Text(reminder.title)
+                    }
                 }
                 .toolbar {
                     ToolbarItem(placement: .principal) {
