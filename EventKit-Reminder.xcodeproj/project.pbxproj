@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A4D1E2B294DA840003F36B2 /* CreateReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4D1E2A294DA840003F36B2 /* CreateReminderView.swift */; };
 		2AF77985294D5670002508B8 /* EventKit_ReminderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF77984294D5670002508B8 /* EventKit_ReminderApp.swift */; };
 		2AF77987294D5670002508B8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF77986294D5670002508B8 /* ContentView.swift */; };
 		2AF77989294D5670002508B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AF77988294D5670002508B8 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A4D1E2A294DA840003F36B2 /* CreateReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReminderView.swift; sourceTree = "<group>"; };
 		2AF77981294D5670002508B8 /* EventKit-Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EventKit-Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AF77984294D5670002508B8 /* EventKit_ReminderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKit_ReminderApp.swift; sourceTree = "<group>"; };
 		2AF77986294D5670002508B8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				2AF77984294D5670002508B8 /* EventKit_ReminderApp.swift */,
 				2AF77986294D5670002508B8 /* ContentView.swift */,
 				2AF77992294D5715002508B8 /* ReminderManager.swift */,
+				2A4D1E2A294DA840003F36B2 /* CreateReminderView.swift */,
 				2AF77988294D5670002508B8 /* Assets.xcassets */,
 				2AF7798A294D5670002508B8 /* Preview Content */,
 			);
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A4D1E2B294DA840003F36B2 /* CreateReminderView.swift in Sources */,
 				2AF77993294D5715002508B8 /* ReminderManager.swift in Sources */,
 				2AF77987294D5670002508B8 /* ContentView.swift in Sources */,
 				2AF77985294D5670002508B8 /* EventKit_ReminderApp.swift in Sources */,

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var reminderManager: ReminderManager
+    // sheetのフラグ
+    @State var isShowCreateReminderView = false
     
     var body: some View {
         if let aReminder = reminderManager.reminders {
@@ -20,6 +22,10 @@ struct ContentView: View {
                         Text(reminder.title)
                     }
                 }
+                .sheet(isPresented: $isShowCreateReminderView) {
+                    CreateReminderView()
+                        .presentationDetents([.medium])
+                }
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                         DatePicker("", selection: $reminderManager.day, displayedComponents: .date)
@@ -27,6 +33,13 @@ struct ContentView: View {
                             .onChange(of: reminderManager.day) { newValue in
                                 reminderManager.fetchReminder()
                             }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            isShowCreateReminderView = true
+                        } label: {
+                            Label("追加", systemImage: "plus")
+                        }
                     }
                 }
             }

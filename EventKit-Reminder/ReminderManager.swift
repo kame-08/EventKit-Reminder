@@ -64,4 +64,23 @@ class ReminderManager: ObservableObject {
             }
         }
     }
+    
+    /// リマインダーの追加
+    func createReminder(title: String, dueDate: Date){
+        // 新規リマインダーの作成
+        let reminder = EKReminder(eventStore: store)
+        reminder.title = title
+        reminder.dueDateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day, .hour, .minute], from: dueDate)
+        // 保存するリマインダー
+        // デフォルリマインダー
+        reminder.calendar = store.defaultCalendarForNewReminders()
+        do {
+            try store.save(reminder, commit: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
 }
+
+
