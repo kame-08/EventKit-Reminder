@@ -50,15 +50,13 @@ class ReminderManager: ObservableObject {
     @objc func fetchReminder() {
         // 開始日コンポーネントの作成
         // 指定した前の日付の23:59:59
-        let start = Calendar.current.date(byAdding: .second, value: -1, to: Calendar.current.startOfDay(for: day))!
+        let start = Calendar.current.date(byAdding: .second, value: -1, to: Calendar.current.startOfDay(for: day))
         // 終了日コンポーネントの作成
         // 指定した日付の23:59:0
         let end = Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: Calendar.current.startOfDay(for: day))
         // イベントストアのインスタンスメソッドから述語を作成
         var predicate: NSPredicate? = nil
-        if let end {
-            predicate = store.predicateForIncompleteReminders(withDueDateStarting: start, ending: end, calendars: nil)
-        }
+        predicate = store.predicateForIncompleteReminders(withDueDateStarting: start, ending: end, calendars: nil)
         // 述語に一致する全てのリマインダーを取得
         if let predicate {
             store.fetchReminders(matching: predicate) { reminder in
@@ -66,5 +64,4 @@ class ReminderManager: ObservableObject {
             }
         }
     }
-    
 }
