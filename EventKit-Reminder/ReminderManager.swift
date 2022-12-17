@@ -83,6 +83,7 @@ class ReminderManager: ObservableObject {
     
     /// リマインダーの変更
     func modifyEvent(reminder: EKReminder,title: String, dueDate: Date){
+        // 削除したいリマインダーを取得
         reminder.title = title
         reminder.dueDateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day, .hour, .minute], from: dueDate)
         // 保存するリマインダー
@@ -90,6 +91,16 @@ class ReminderManager: ObservableObject {
         reminder.calendar = store.defaultCalendarForNewReminders()
         do {
             try store.save(reminder, commit: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// リマインダーの削除
+    func deleteEvent(event: EKReminder){
+        // 削除したいイベントを取得
+        do {
+            try store.remove(event,commit: true)
         } catch {
             print(error.localizedDescription)
         }

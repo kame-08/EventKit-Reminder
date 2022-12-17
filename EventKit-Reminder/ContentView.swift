@@ -28,6 +28,13 @@ struct ContentView: View {
                             isShowCreateReminderView = true
                         }
                     }
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            reminderManager.deleteEvent(event: reminder)
+                        } label: {
+                            Label("削除", systemImage: "trash")
+                        }
+                    }
                 }
                 .sheet(isPresented: $isShowCreateReminderView) {
                     CreateReminderView(reminder: $reminder)
