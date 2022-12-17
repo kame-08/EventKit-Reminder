@@ -12,6 +12,10 @@ class ReminderManager: ObservableObject {
     var store = EKEventStore()
     // リマインダーへの認証ステータスのメッセージ
     @Published var statusMessage = ""
+    // 取得されたリマインダー
+    @Published var reminders: [EKReminder]? = nil
+    // 取得したいリマインダーの日付
+    @Published var day = Date()
     
     init() {
         Task {
@@ -33,9 +37,34 @@ class ReminderManager: ObservableObject {
                 statusMessage = "リマインダーへのアクセスが\n明示的に拒否されています。"
             case .authorized:
                 statusMessage = "リマインダーへのアクセスが\n許可されています。"
+                fetchReminder()
+                // カレンダーデータベースの変更を検出したらfetchReminder()を実行する
+                NotificationCenter.default.addObserver(self, selector: #selector(fetchReminder), name: .EKEventStoreChanged, object: store)
             @unknown default:
                 statusMessage = "@unknown default"
             }
         }
     }
+    
+    /// リマインダーの取得
+    @objc func fetchReminder() {
+        // 開始日コンポーネントの作成
+        // 指定した日付の0:00:0
+        let start = Calendar.current.startOfDay(for: day)
+        // 終了日コンポーネントの作成
+        // 指定した日付の23:59:1
+        let end = Calendar.current.date(bySettingHour: 23, minute: 59, second: 1, of: start)
+        // イベントストアのインスタンスメソッドから述語を作成
+        var predicate: NSPredicate? = nil
+        if let end {
+            predicate = store.predicateForIncompleteReminders(withDueDateStarting: start, ending: end, calendars: nil)
+        }
+        // 述語に一致する全てのリマインダーを取得
+        if let predicate {
+            store.fetchReminders(matching: predicate) { reminder in
+                self.reminders = reminder
+            }
+        }
+    }
+    
 }

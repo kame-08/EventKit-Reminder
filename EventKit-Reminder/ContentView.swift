@@ -11,7 +11,22 @@ struct ContentView: View {
     @EnvironmentObject var reminderManager: ReminderManager
     
     var body: some View {
-        VStack {
+        if let aReminder = reminderManager.reminders {
+            NavigationStack {
+                List(aReminder, id: \.calendarItemIdentifier) { reminder in
+                    Text(reminder.title)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        DatePicker("", selection: $reminderManager.day, displayedComponents: .date)
+                            .labelsHidden()
+                            .onChange(of: reminderManager.day) { newValue in
+                                reminderManager.fetchReminder()
+                            }
+                    }
+                }
+            }
+        } else {
             Text(reminderManager.statusMessage)
         }
     }
