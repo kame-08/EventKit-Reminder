@@ -49,11 +49,11 @@ class ReminderManager: ObservableObject {
     /// リマインダーの取得
     @objc func fetchReminder() {
         // 開始日コンポーネントの作成
-        // 指定した日付の0:00:0
-        let start = Calendar.current.startOfDay(for: day)
+        // 指定した前の日付の23:59:59
+        let start = Calendar.current.date(byAdding: .second, value: -1, to: Calendar.current.startOfDay(for: day))!
         // 終了日コンポーネントの作成
-        // 指定した日付の23:59:1
-        let end = Calendar.current.date(bySettingHour: 23, minute: 59, second: 1, of: start)
+        // 指定した日付の23:59:0
+        let end = Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: Calendar.current.startOfDay(for: day))
         // イベントストアのインスタンスメソッドから述語を作成
         var predicate: NSPredicate? = nil
         if let end {
