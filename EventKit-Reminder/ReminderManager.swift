@@ -72,7 +72,7 @@ class ReminderManager: ObservableObject {
         reminder.title = title
         reminder.dueDateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day, .hour, .minute], from: dueDate)
         // 保存するリマインダー
-        // デフォルリマインダー
+        // デフォルトリマインダー
         reminder.calendar = store.defaultCalendarForNewReminders()
         do {
             try store.save(reminder, commit: true)
@@ -81,6 +81,17 @@ class ReminderManager: ObservableObject {
         }
     }
     
+    /// リマインダーの変更
+    func modifyEvent(reminder: EKReminder,title: String, dueDate: Date){
+        reminder.title = title
+        reminder.dueDateComponents = Calendar.current.dateComponents([.calendar, .year, .month, .day, .hour, .minute], from: dueDate)
+        // 保存するリマインダー
+        // デフォルトリマインダー
+        reminder.calendar = store.defaultCalendarForNewReminders()
+        do {
+            try store.save(reminder, commit: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
-
-

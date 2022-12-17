@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct ContentView: View {
     @EnvironmentObject var reminderManager: ReminderManager
     // sheetのフラグ
     @State var isShowCreateReminderView = false
+    // 変更したいリマインダー(追加の場合はnil)
+    @State var reminder: EKReminder?
     
     var body: some View {
         if let aReminder = reminderManager.reminders {
@@ -19,11 +22,15 @@ struct ContentView: View {
                     HStack {
                         Image(systemName: reminder.isCompleted ? "checkmark.circle.fill" : "circle")
                             .foregroundColor(reminder.isCompleted ? Color.accentColor : Color.gray)
-                        Text(reminder.title)
+                        Button(reminder.title) {
+                            // 変更したいイベントをCreateEventViewに送る
+                            self.reminder = reminder
+                            isShowCreateReminderView = true
+                        }
                     }
                 }
                 .sheet(isPresented: $isShowCreateReminderView) {
-                    CreateReminderView()
+                    CreateReminderView(reminder: $reminder)
                         .presentationDetents([.medium])
                 }
                 .toolbar {
@@ -36,6 +43,8 @@ struct ContentView: View {
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
+                            // 追加したい場合は、CreateReminderViewにイベントを送らない(nilを送る)
+                            reminder = nil
                             isShowCreateReminderView = true
                         } label: {
                             Label("追加", systemImage: "plus")
