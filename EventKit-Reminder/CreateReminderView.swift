@@ -18,12 +18,24 @@ struct CreateReminderView: View {
     @State var title = ""
     // リマインダーの開始日時
     @State var dueDate = Date()
+    // リマインダーの終日のフラグ
+    @State var allDay = false
+    // リマインダーのURL
+    @State var URLText = ""
     
     var body: some View {
         NavigationStack{
             List {
                 TextField("タイトル", text: $title)
-                DatePicker("開始", selection: $dueDate)
+                Toggle("終日", isOn: $allDay)
+                DatePicker("開始", selection: $dueDate, displayedComponents: allDay ? [.date] : [.date, .hourAndMinute])
+                HStack {
+                    TextField("URL", text: $URLText)
+                    PasteButton(payloadType: URL.self) { Paste in
+                        URLText = Paste[0].absoluteString
+                    }
+                    .labelStyle(.iconOnly)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -58,6 +70,6 @@ struct CreateReminderView: View {
 
 struct CreateReminderView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateReminderView(reminder: .constant(EKReminder()))
+        CreateReminderView(reminder: .constant(nil))
     }
 }
